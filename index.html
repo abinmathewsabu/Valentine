@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Anit 💖 My Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+:root { --beige:#F5E6D3; }
+
+body {
+  margin:0;
+  font-family:'Dancing Script',cursive;
+  text-align:center;
+  overflow:hidden;
+  color:var(--beige);
+}
+
+.page {
+  display:none;
+  min-height:100vh;
+  padding:40px 20px;
+  position:relative;
+}
+.active { display:block; }
+
+.pink {
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+button {
+  margin:15px;
+  padding:12px 25px;
+  font-size:18px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  background:var(--beige);
+  color:#c81414;
+  font-family:Arial,sans-serif;
+}
+
+/* hearts */
+.top-heart-left,.top-heart-right {
+  position:absolute;
+  top:20px;
+  width:450px;
+}
+.top-heart-left { left:20px; }
+.top-heart-right { right:20px; }
+.clickable { cursor:pointer; }
+
+/* envelope */
+.envelope-area {
+  width:340px;
+  margin:200px auto 0;
+  cursor:pointer;
+  z-index:10;
+  position:relative;
+}
+.envelope-area img { width:100%; }
+
+/* letter page */
+.letter-page {
+  background:white;
+  color:#c81414;
+}
+.letter-page img {
+  width:95%;
+  max-width:900px;
+}
+
+/* memories */
+.memories-page { background:#c81414; }
+.memories-title {
+  font-size:48px;
+  margin-top:80px;
+  color:var(--beige);
+}
+.memories {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:35px;
+  margin-top:40px;
+}
+.polaroid {
+  background:white;
+  padding:12px;
+  border-radius:6px;
+  width:170px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  transition:transform .3s ease;
+}
+.polaroid:hover { transform:scale(1.08); }
+.polaroid img {
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+.polaroid p {
+  color:#c81414;
+  font-family:'Pacifico',cursive;
+  font-size:16px;
+}
+
+/* love rain */
+.love-container {
+  position:relative;
+  height:70vh;
+  overflow:hidden;
+}
+.love-stack {
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:400px;
+  height:70vh;
+}
+.love-item {
+  position:absolute;
+  background:var(--beige);
+  color:#c81414;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:16px;
+  font-family:Arial,sans-serif;
+  animation:fall .8s ease forwards;
+}
+@keyframes fall {
+  0% { transform:translateY(-120px); opacity:0; }
+  100% { transform:translateY(var(--finalY)); opacity:1; }
+}
+
+/* final heart */
+.final-heart {
+  width:450px;
+  margin-top:120px;
+  animation:heartbeat 1.5s infinite;
+}
+@keyframes heartbeat {
+  0% { transform:scale(1); }
+  50% { transform:scale(1.1); }
+  100% { transform:scale(1); }
+}
+
+/* love image */
+.love-final-img {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:500px !important;
+  opacity:0;
+  transform:scale(.7);
+  transition:all 1.2s ease;
+  z-index:9999;
+}
+.love-final-img.show {
+  opacity:1;
+  transform:scale(1);
+}
+
+/* confetti hearts */
+.heart {
+  position:fixed;
+  bottom:-10px;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+@keyframes float {
+  to { transform:translateY(-110vh); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+<img src="love.png" id="loveFinal" class="love-final-img">
+
+<!-- PAGE 1 -->
+<div class="page pink active" id="page1">
+  <img src="heart.png" class="top-heart-left">
+  <img src="heart.png" class="top-heart-right">
+  <h1>A Letter for you!</h1>
+  <div class="envelope-area" onclick="openEnvelope()">
+    <img src="envelope.png">
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page pink" id="page2">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page1')">
+  <img src="heart.png" class="top-heart-right">
+  <h1>My Love</h1>
+  <img src="open-envelope.png" style="width:340px;">
+  <br>
+  <button onclick="showPage('page3')">Open the letter</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page letter-page" id="page3">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page2')">
+  <img src="heart.png" class="top-heart-right">
+  <h1 style="color:#c81414;">My Love</h1>
+  <img src="letter.png">
+  <br>
+  <button onclick="showPage('page4')">Continue 💖</button>
+</div>
+
+<!-- MENU -->
+<div class="page pink" id="page4">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page3')">
+  <img src="heart.png" class="top-heart-right">
+  <h1>Choose what you want to see 💖</h1>
+  <button onclick="showPage('page5')">Our Memories</button>
+  <button onclick="showPage('page6')">Things I Love About You</button>
+  <br>
+  <button onclick="showPage('page7')">Valentine Question 💘</button>
+</div>
+
+<!-- MEMORIES -->
+<div class="page memories-page" id="page5">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page4')">
+  <img src="heart.png" class="top-heart-right">
+  <h1 class="memories-title">My Favorite Moments</h1>
+  <div class="memories">
+    <div class="polaroid"><img src="photo1.jpg"><p>First snowshoeing ❄️</p></div>
+    <div class="polaroid"><img src="photo2.jpg"><p>Our India trip 🇮🇳</p></div>
+    <div class="polaroid"><img src="photo3.jpg"><p>Shelby’s selfie 😄</p></div>
+    <div class="polaroid"><img src="photo4.jpg"><p>SeaWorld Abu Dhabi 🐬</p></div>
+    <div class="polaroid"><img src="photo5.jpg"><p>Ramen date 🍜</p></div>
+    <div class="polaroid"><img src="photo6.jpg"><p>Favorite photo ever ❤️</p></div>
+  </div>
+  <button onclick="showPage('page4')">Back</button>
+</div>
+
+<!-- LOVE PAGE -->
+<div class="page pink" id="page6">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page4')">
+  <img src="heart.png" class="top-heart-right">
+  <h1>Things I Love About You ❤️</h1>
+  <div class="love-container">
+    <div class="love-stack" id="loveContainer"></div>
+  </div>
+  <button onclick="showPage('page4')">Back</button>
+</div>
+
+<!-- QUESTION -->
+<div class="page pink" id="page7">
+  <img src="heart.png" class="top-heart-left clickable" onclick="showPage('page4')">
+  <img src="heart.png" class="top-heart-right">
+  <h1>Will you be my Valentine? 💖</h1>
+  <button onclick="yesClicked()">Yes 💕</button>
+  <button id="noBtn">No 🙈</button>
+</div>
+
+<!-- FINAL -->
+<div class="page pink" id="page8">
+  <img src="heart.png" class="final-heart">
+  <h1>Forever my Valentine, Anit 💍</h1>
+</div>
+
+<script>
+function showPage(pageId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  if(pageId==="page6") setTimeout(startLoveRain,200);
+}
+
+function openEnvelope(){
+  document.getElementById("bgMusic").play().catch(()=>{});
+  showPage('page2');
+}
+
+function yesClicked(){
+  showPage('page8');
+
+  const love = document.getElementById("loveFinal");
+  love.style.width = "500px";
+  love.classList.add("show");
+
+  const confetti=setInterval(()=>{
+    for(let i=0;i<12;i++){
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.innerHTML="❤️";
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.fontSize=(18+Math.random()*20)+"px";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),7000);
+    }
+  },300);
+
+  setTimeout(()=>clearInterval(confetti),15000);
+}
+
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  const x=Math.random()*(window.innerWidth-120);
+  const y=Math.random()*(window.innerHeight-60);
+  noBtn.style.position="absolute";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+});
+
+const loveLines=[
+"Your smile","Your kindness","Your laugh","Your hugs",
+"Your eyes","Your voice","Your heart","Your patience",
+"Your warmth","Everything about you"
+];
+
+function startLoveRain(){
+  const container=document.getElementById("loveContainer");
+  container.innerHTML="";
+  let stackHeight=0;
+  const rain=setInterval(()=>{
+    for(let i=0;i<12;i++){
+      stackHeight+=6;
+      dropLove(container,stackHeight);
+    }
+  },40);
+  setTimeout(()=>clearInterval(rain),6500);
+}
+
+function dropLove(container,stackHeight){
+  const item=document.createElement("div");
+  item.className="love-item";
+  item.innerText=loveLines[Math.floor(Math.random()*loveLines.length)];
+  const offset=(Math.random()-0.5)*200;
+  item.style.left=`calc(50% + ${offset}px)`;
+  item.style.setProperty("--finalY",`calc(70vh - ${stackHeight}px)`);
+  container.appendChild(item);
+}
+</script>
+
+</body>
+</html>
